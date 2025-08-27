@@ -1,6 +1,7 @@
 #include <iostream>
 #include <GL/glew.h>
-#include <GLFW//glfw3.h>
+#include <GLFW/glfw3.h>
+#include <random>
 
 using namespace std;
 
@@ -35,7 +36,8 @@ static const char* fragmentShader = "                                           
 #version 330                                                                               \n\
                                                                                            \n\
 // diferente da entrada por layout, uniform é uma entrada em tempo de execução             \n\
-uniform in vec3 triColor;																   \n\
+uniform vec3 triColor;																       \n\
+out vec4 color;																		       \n\
                                                                                            \n\
 void main() {                                                                              \n\
 	color = vec4(triColor, 1.0);                                                           \n\
@@ -77,6 +79,7 @@ void add_shader(GLuint program, const char* shaderCode, GLenum type) {
 	// converte char para glchar
 	const GLchar* code[1];
 	code[0] = shaderCode;
+	// Compilação dos shaders
 	glShaderSource(_shader, 1, code, NULL);
 	glCompileShader(_shader);
 
@@ -86,6 +89,7 @@ void add_shader(GLuint program, const char* shaderCode, GLenum type) {
 }
 
 void add_program() {
+	// Criação do programa
 	shaderProgram = glCreateProgram();
 	if (!shaderProgram) {
 		cout << "Erro: falha ao criar o programa!";
@@ -94,14 +98,21 @@ void add_program() {
 	add_shader(shaderProgram, vertexShader, GL_VERTEX_SHADER);
 	add_shader(shaderProgram, fragmentShader, GL_FRAGMENT_SHADER);
 
+	// Linking do programa com o shader compilado
 	glLinkProgram(shaderProgram);
 }
 
+GLfloat random_float() {
+	std::random_device dev;
+	std::mt19937 rng(dev());
 
-
-
+	std::uniform_real_distribution<> distr(0.0, 1.0);
+	GLfloat random_float = distr(rng);
+	return random_float;
+}
 
 int main() {
+	// GLFW Cria a nossa janela
 	// inicando GLFW
 	if (!glfwInit()) {
 		cout << "Erro: GLFW não foi iniciado";
@@ -110,13 +121,14 @@ int main() {
 	}
 
 	// set nas coisas obrigatórias para subir uma janela
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // versão máxima permitida 
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // versão máxima permitida
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // versão mínima
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // somente as funções core
+	// Setando retrocompatibilidade como true
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // qual a precisão de ponto flutuante que vamos usar, precisão da placa
 
 	// criação de janela 
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Window", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Triangulo", NULL, NULL);
 	if (!window) {
 		cout << "Erro: Não foi possível criar a janela";
 		glfwTerminate();
@@ -130,7 +142,7 @@ int main() {
 	glfwMakeContextCurrent(window); // tornando essa janela como principal
 
 	//iniciando o Glew
-	glewExperimental = GLU_TRUE;
+	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
 		cout << "Erro: não foi possível iniciar o glew";
 		glfwDestroyWindow(window);
@@ -140,10 +152,30 @@ int main() {
 
 	glViewport(0, 0, bufferWidth, bufferHeight);
 
+	create_triangle();
+	add_program();
+
 	while (!glfwWindowShouldClose(window)) {
-		glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glfwPollEvents();
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		GLfloat r = random_float();
+		GLfloat g = random_float();
+		GLfloat b = random_float();
+
+		// Altera cor do triangulo
+		GLint uniformColor = glGetUniformLocation(shaderProgram, "triColor");
+		glUniform3f(uniformColor, r, g, b);
+
+		// Desenhando o triangulo
+		glUseProgram(shaderProgram);
+		glBindVertexArray(VAO);
+			// Triangulo, começando na pos 0, Numero de pontos 3
+			glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindVertexArray(0);
+
+
 		glfwSwapBuffers(window);
 	}
 
