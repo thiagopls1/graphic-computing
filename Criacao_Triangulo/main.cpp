@@ -1,7 +1,12 @@
 #include <iostream>
+#include <random>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <random>
+
+// GLM Roda na CPU
+#include <glm\glm.hpp>
+#include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtc\type_ptr.hpp>
 
 using namespace std;
 
@@ -12,20 +17,38 @@ const GLint WIDTH = 800, HEIGHT = 600;
 // todo programa pode ser chamado de shader
 GLuint VAO, VBO, shaderProgram;
 
-// aqui estamos fazendo um programa (shader) em GLSL
+bool 
+	direction = false, 
+	directionSize = false;
+float
+	triOffset = 0.2f,
+	triOffsetMax = 1.2f,
+	triOffsetMin = 0.2f,
+	triOffsetIncrement = 0.01f;
+float
+	triOffsetSize = 0.2f,
+	triOffsetSizeMax = 1.2f,
+	triOffsetSizeMin = 0.2f,
+	triOffsetSizeIncrement = 0.01f;
+float
+	triCurrentAngle = 0.0f,
+	triAngleIncrement = 1.0f;
 
+float toRadians = 3.1415 / 180;
+
+// aqui estamos fazendo um programa (shader) em GLSL
 // shader para renderizar pontos na tela
 static const char* vertexShader = "                                                        \n\
 #version 330                                                                               \n\
-                                                                                           \n\
                                                                                            \n\
 // passando um argumento para o inicio do programa (args do C//                            \n\
 // estou passando um argumento de entrada na primeira posiçâo                              \n\
 // esse argumento deve ser um vetor de duas posições                                       \n\
 layout(location=0) in vec2 pos;                                                            \n\
+uniform mat4 model;				                                                           \n\
                                                                                            \n\
 void main() {                                                                              \n\
-	gl_Position = vec4(pos.x, pos.y, 0.0, 1.0);                                            \n\
+	gl_Position = model * vec4(pos.x, pos.y, 0.0, 1.0);                                    \n\
 }                                                                                          \n\
 ";
 
@@ -160,13 +183,52 @@ int main() {
 		glfwPollEvents();
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		GLfloat r = random_float();
+		GLfloat r = 1.0f;
+		GLfloat g = 0.6f;
+		GLfloat b = 0.8f;
+		/*GLfloat r = random_float();
 		GLfloat g = random_float();
-		GLfloat b = random_float();
+		GLfloat b = random_float();*/
 
 		// Altera cor do triangulo
 		GLint uniformColor = glGetUniformLocation(shaderProgram, "triColor");
 		glUniform3f(uniformColor, r, g, b);
+
+		// Muda o tamanho
+		if (!direction) {
+			triOffset += triOffsetIncrement;
+		}
+		else {
+			triOffset -= triOffsetIncrement;
+		}
+
+		if (triOffset > triOffsetMax || triOffset < triOffsetMin) {
+			direction = !direction;
+		}
+
+		triCurrentAngle += triAngleIncrement;
+		if (triCurrentAngle >= 360) {
+			triCurrentAngle = 0;
+		}
+
+		if (!directionSize) {
+			triOffsetSize += triOffsetSizeIncrement;
+		}
+		else {
+			triOffsetSize -= triOffsetSizeIncrement;
+		}
+		if (triOffsetSize > triOffsetSizeMax || triOffsetSize < triOffsetSizeMin) {
+			directionSize = !directionSize;
+		}
+
+		GLint uniformModel = glGetUniformLocation(shaderProgram, "model");
+		glm::mat4 model(1.0f);
+
+		model = glm::translate(model, glm::vec3(triOffsetSize, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(triOffsetSize, triOffsetSize, 0.0f));
+		model = glm::rotate(model, triCurrentAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
 		// Desenhando o triangulo
 		glUseProgram(shaderProgram);
