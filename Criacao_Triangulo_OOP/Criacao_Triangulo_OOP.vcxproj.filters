@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Arquivos de Origem">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx;glsl</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Recurso">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Origem\shader">
+      <UniqueIdentifier>{94809ac2-6b25-4d7f-933b-9852b6d76e11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\window">
+      <UniqueIdentifier>{77b26c61-aab8-4d4a-9ad1-746f5dc8fed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\mesh">
+      <UniqueIdentifier>{b0428940-79c2-4b48-8c72-c619b4329224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\shaders">
+      <UniqueIdentifier>{b3f6d9c5-4cc8-49ab-be3e-a6aa6b785567}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="shader\shader.cpp">
+      <Filter>Arquivos de Origem\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="window\window.cpp">
+      <Filter>Arquivos de Origem\window</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh\mesh.cpp">
+      <Filter>Arquivos de Origem\mesh</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragment_shader.glsl">
+      <Filter>Arquivos de Origem\shaders</Filter>
+    </None>
+    <None Include="shaders\vertex_shader.glsl">
+      <Filter>Arquivos de Origem\shaders</Filter>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="shader\shader.h">
+      <Filter>Arquivos de Origem\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="window\window.h">
+      <Filter>Arquivos de Origem\window</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh\mesh.h">
+      <Filter>Arquivos de Origem\mesh</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ceb11d79-1f16-4b2d-a279-6098578c8600}</ProjectGuid>
-    <RootNamespace>CriacaoJanela</RootNamespace>
+    <ProjectGuid>{4e7d64da-f19b-48ca-bd45-5a418a44422f}</ProjectGuid>
+    <RootNamespace>CriacaoTrianguloOOP</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -108,7 +108,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,24 +128,34 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mesh\mesh.cpp" />
+    <ClCompile Include="shader\shader.cpp" />
+    <ClCompile Include="window\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="shaders\fragment_shader.glsl" />
+    <None Include="shaders\vertex_shader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mesh\mesh.h" />
+    <ClInclude Include="shader\shader.h" />
+    <ClInclude Include="window\window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\glfw.3.4.0\build\native\glfw.targets" Condition="Exists('..\packages\glfw.3.4.0\build\native\glfw.targets')" />
+    <Import Project="..\packages\glm.1.0.1\build\native\glm.targets" Condition="Exists('..\packages\glm.1.0.1\build\native\glm.targets')" />
     <Import Project="..\packages\unofficial-flayan-glew.redist.2.1.0\build\native\unofficial-flayan-glew.redist.targets" Condition="Exists('..\packages\unofficial-flayan-glew.redist.2.1.0\build\native\unofficial-flayan-glew.redist.targets')" />
     <Import Project="..\packages\unofficial-flayan-glew.2.1.0\build\native\unofficial-flayan-glew.targets" Condition="Exists('..\packages\unofficial-flayan-glew.2.1.0\build\native\unofficial-flayan-glew.targets')" />
-    <Import Project="..\packages\glm.1.0.1\build\native\glm.targets" Condition="Exists('..\packages\glm.1.0.1\build\native\glm.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\glfw.3.4.0\build\native\glfw.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glfw.3.4.0\build\native\glfw.targets'))" />
+    <Error Condition="!Exists('..\packages\glm.1.0.1\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.1.0.1\build\native\glm.targets'))" />
     <Error Condition="!Exists('..\packages\unofficial-flayan-glew.redist.2.1.0\build\native\unofficial-flayan-glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\unofficial-flayan-glew.redist.2.1.0\build\native\unofficial-flayan-glew.redist.targets'))" />
     <Error Condition="!Exists('..\packages\unofficial-flayan-glew.2.1.0\build\native\unofficial-flayan-glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\unofficial-flayan-glew.2.1.0\build\native\unofficial-flayan-glew.targets'))" />
-    <Error Condition="!Exists('..\packages\glm.1.0.1\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.1.0.1\build\native\glm.targets'))" />
   </Target>
 </Project>

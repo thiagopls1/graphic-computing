@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Criacao_Janela", "Criacao_J
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Criacao_Triangulo", "Criacao_Triangulo\Criacao_Triangulo.vcxproj", "{E73A39B4-69B9-4F2A-9AE7-4B928C185309}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Criacao_Triangulo_OOP", "Criacao_Triangulo_OOP\Criacao_Triangulo_OOP.vcxproj", "{4E7D64DA-F19B-48CA-BD45-5A418A44422F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{E73A39B4-69B9-4F2A-9AE7-4B928C185309}.Release|x64.Build.0 = Release|x64
 		{E73A39B4-69B9-4F2A-9AE7-4B928C185309}.Release|x86.ActiveCfg = Release|Win32
 		{E73A39B4-69B9-4F2A-9AE7-4B928C185309}.Release|x86.Build.0 = Release|Win32
+		{4E7D64DA-F19B-48CA-BD45-5A418A44422F}.Debug|x64.ActiveCfg = Debug|x64
+		{4E7D64DA-F19B-48CA-BD45-5A418A44422F}.Debug|x64.Build.0 = Debug|x64
+		{4E7D64DA-F19B-48CA-BD45-5A418A44422F}.Debug|x86.ActiveCfg = Debug|Win32
+		{4E7D64DA-F19B-48CA-BD45-5A418A44422F}.Debug|x86.Build.0 = Debug|Win32
+		{4E7D64DA-F19B-48CA-BD45-5A418A44422F}.Release|x64.ActiveCfg = Release|x64
+		{4E7D64DA-F19B-48CA-BD45-5A418A44422F}.Release|x64.Build.0 = Release|x64
+		{4E7D64DA-F19B-48CA-BD45-5A418A44422F}.Release|x86.ActiveCfg = Release|Win32
+		{4E7D64DA-F19B-48CA-BD45-5A418A44422F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
