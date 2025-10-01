@@ -30,3 +30,4 @@ private:
 
 	GLfloat moveSpeed, trunSpeed;
 };
+

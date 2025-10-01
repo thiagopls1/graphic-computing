@@ -39,3 +39,4 @@ private:
 	bool mouseFirstMove; //verifica se � o primeiro movimento do mouse
 	static void handleMouse(GLFWwindow* window, double xPos, double yPos);
 };
+
