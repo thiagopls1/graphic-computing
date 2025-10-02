@@ -54,6 +54,28 @@ void CreateTriangle() {
 	meshList.push_back(obj2);
 }
 
+void CreateFloor() {
+	GLfloat vertices[] = {
+		-10.0f, 0.0f, 10.0f,	5.0f, 10.0f,  //V�rtice 0 (x,y,z, u,v)
+		-10.0f, 0.0f, -10.0f,	0.0f, 0.0f,  //V�rtice 1 (x,y,z, u,v)
+		10.0f, 0.0f, 10.0f,		10.0f, 5.0f,   //V�rtice 2 (x,y,z, u,v)
+		10.0f, 0.0f, -10.0f,	5.0f, 10.0f   //V�rtice 3 (x,y,z, u,v)
+	};
+
+	unsigned int indices[] = {
+		0,1,2,
+		3,1,2
+	};
+
+	Mesh* obj1 = new Mesh();
+	obj1->CreateMesh(vertices, indices, sizeof(vertices), sizeof(indices));
+	meshList.push_back(obj1);
+
+	Mesh* obj2 = new Mesh();
+	obj2->CreateMesh(vertices, indices, sizeof(vertices), sizeof(indices));
+	meshList.push_back(obj2);
+}
+
 void CreateShader() {
 	Shader* shader1 = new Shader();
 	shader1->CreateFromFile(vertexLocation, fragmentLocation);
@@ -66,6 +88,7 @@ int main() {
 
 	//Criar o Triangulo
 	CreateTriangle(); //Coloca os dados na mem�ria da placa de v�deo
+	CreateFloor(); // Cria o triangulo do chão
 	CreateShader(); //Cria os Shaders
 
 	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 8.0f);
@@ -108,7 +131,7 @@ int main() {
 		* Piramide 1
 		*********************************/
 		glm::mat4 model(1.0f); //cria uma matriz 4x4 e coloca os valores 1.0f em todas as posi��es
-		model = glm::translate(model, glm::vec3(0.0f, -0.25f, -2.5f)); //traduz o modelo para movimentar a posi��o (x,y,z)
+		model = glm::translate(model, glm::vec3(0.0f, -0.245f, -2.5f)); //traduz o modelo para movimentar a posi��o (x,y,z)
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
 		//model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(shaderList[0].getUniformModel(), 1, GL_FALSE, glm::value_ptr(model));
@@ -124,6 +147,70 @@ int main() {
 		glUniformMatrix4fv(shaderList[0].getUniformModel(), 1, GL_FALSE, glm::value_ptr(model));
 		dirtTexture.useTexture();
 		meshList[1]->RenderMesh();
+
+		/********************************
+		* Chão (Cima)
+		*********************************/
+		model = glm::mat4(1.0f); //cria uma matriz 4x4 colocando 1.0f em cada uma das posi��es
+		model = glm::translate(model, glm::vec3(0.0f, -0.65f, -2.5f)); //traduz o modelo para movimentar a posi��o (x,y,z)
+		//model = glm::scale(model, glm::vec3(1.0f, 0.001f, 1.0f));
+		glUniformMatrix4fv(shaderList[0].getUniformModel(), 1, GL_FALSE, glm::value_ptr(model));
+		dirtTexture.useTexture();
+		meshList[2]->RenderMesh();
+
+		/********************************
+		* Chão (Fundo)
+		*********************************/
+		model = glm::mat4(1.0f); //cria uma matriz 4x4 colocando 1.0f em cada uma das posi��es
+		model = glm::translate(model, glm::vec3(0.0f, -10.65f, -12.5f)); //traduz o modelo para movimentar a posi��o (x,y,z)
+		//model = glm::scale(model, glm::vec3(1.0f, 0.001f, 1.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(shaderList[0].getUniformModel(), 1, GL_FALSE, glm::value_ptr(model));
+		dirtTexture.useTexture();
+		meshList[2]->RenderMesh();
+
+		/********************************
+		* Chão (Frente)
+		*********************************/
+		model = glm::mat4(1.0f); //cria uma matriz 4x4 colocando 1.0f em cada uma das posi��es
+		model = glm::translate(model, glm::vec3(0.0f, -10.65f, 7.5f)); //traduz o modelo para movimentar a posi��o (x,y,z)
+		//model = glm::scale(model, glm::vec3(1.0f, 0.001f, 1.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(shaderList[0].getUniformModel(), 1, GL_FALSE, glm::value_ptr(model));
+		dirtTexture.useTexture();
+		meshList[2]->RenderMesh();
+
+		/********************************
+		* Chão (Direita)
+		*********************************/
+		model = glm::mat4(1.0f); //cria uma matriz 4x4 colocando 1.0f em cada uma das posi��es
+		model = glm::translate(model, glm::vec3(10.0f, -10.65f, -2.5f)); //traduz o modelo para movimentar a posi��o (x,y,z)
+		//model = glm::scale(model, glm::vec3(1.0f, 0.001f, 1.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(shaderList[0].getUniformModel(), 1, GL_FALSE, glm::value_ptr(model));
+		dirtTexture.useTexture();
+		meshList[2]->RenderMesh();
+
+		/********************************
+		* Chão (Direita)
+		*********************************/
+		model = glm::mat4(1.0f); //cria uma matriz 4x4 colocando 1.0f em cada uma das posi��es
+		model = glm::translate(model, glm::vec3(-10.0f, -10.65f, -2.5f)); //traduz o modelo para movimentar a posi��o (x,y,z)
+		//model = glm::scale(model, glm::vec3(1.0f, 0.001f, 1.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(shaderList[0].getUniformModel(), 1, GL_FALSE, glm::value_ptr(model));
+		dirtTexture.useTexture();
+		meshList[2]->RenderMesh();
+
+		/********************************
+		* Chão (Baixo)
+		*********************************/
+		model = glm::mat4(1.0f); //cria uma matriz 4x4 colocando 1.0f em cada uma das posi��es
+		model = glm::translate(model, glm::vec3(0.0f, -20.65f, -2.5f)); //traduz o modelo para movimentar a posi��o (x,y,z)
+		//model = glm::scale(model, glm::vec3(1.0f, 0.001f, 1.0f));
+		glUniformMatrix4fv(shaderList[0].getUniformModel(), 1, GL_FALSE, glm::value_ptr(model));
+		dirtTexture.useTexture();
+		meshList[2]->RenderMesh();
 
 		glUseProgram(0); //Removo o Programa da mem�ria
 
